@@ -64,6 +64,7 @@ public class BankingAccountController {
 
     @PutMapping("/organisation/account")
     public ResponseEntity<Response> editOrganisationAccount(@RequestHeader String token,
+                                                          @RequestHeader String accountId,
                                                           @Valid @RequestBody OrganisationDTO organisationDTO,
                                                           BindingResult bindingResult){
         if (bindingResult.hasErrors()){

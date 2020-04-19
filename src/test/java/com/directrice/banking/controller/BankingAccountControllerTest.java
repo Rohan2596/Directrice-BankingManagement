@@ -2,6 +2,8 @@ package com.directrice.banking.controller;
 
 
 
+import com.directrice.banking.dto.AddressDTO;
+import com.directrice.banking.dto.OrganisationDTO;
 import com.directrice.banking.dto.UserAccountDTO;
 import com.directrice.banking.response.Response;
 import com.google.gson.Gson;
@@ -30,9 +32,11 @@ public class BankingAccountControllerTest {
     private MockMvc mockMvc;
 
     private UserAccountDTO userAccountDTO;
+    private OrganisationDTO organisationDto;
+    private AddressDTO addressDTO;
 
 
-//added
+    //added
     @Test
     public void givenValidUserInfo_NATURAL_WhenAdded_shouldReturnValidResponse() throws Exception {
         this.userAccountDTO=new UserAccountDTO("Rohan","kadam","1/01/1990","Indian","India","Services");
@@ -848,7 +852,368 @@ public class BankingAccountControllerTest {
     }
 
     ///Organisation Account Controller.
+    //ADDED
+    @Test
+    public void givenValidOrganisationDto_LEGAL_WhenAdded_shouldReturnValidResponse() throws Exception {
+        this.addressDTO=new AddressDTO("Marine Drive,Mumbai","Mumbai","Mumbai","Maharashtra","India","400025");
+
+        this.organisationDto=new OrganisationDTO("Directrice Pvt LTD","INMHMU4120","www.directrice.com","Business",this.addressDTO,"12/12/2019");
+        String organisationDto=new Gson().toJson(this.organisationDto);
+        MvcResult result = this.mockMvc.perform(post("/directrice/banking/organisation/account")
+                .header("token","token")
+                .content(organisationDto)
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andReturn();
+        assertEquals(201,result.getResponse().getStatus());
+    }
+    //Organisation name
+    @Test
+    public void givenInValidOrganisationDTO_LEGAL_Name_NULL_WhenAdded_shouldReturnValidResponse() throws Exception {
+        this.addressDTO=new AddressDTO("Marine Drive,Mumbai","Mumbai","Mumbai","Maharashtra","India","400025");
+
+        String name=null;
+        this.organisationDto=new OrganisationDTO(name,"INMHMU4120","www.directrice.com","Business",this.addressDTO,"12/12/2019");
+        String organisationDto=new Gson().toJson(this.organisationDto);
+        MvcResult result = this.mockMvc.perform(post("/directrice/banking/organisation/account")
+                .header("token","token")
+                .content(organisationDto)
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andReturn();
+        assertEquals(400,result.getResponse().getStatus());
+        assertEquals("Organisation Name cannot be empty.", new Gson().fromJson(result.getResponse().getContentAsString(), Response.class).getData());
+    }
+
+    @Test
+    public void givenInValidOrganisationDTO_LEGAL_Name_Empty_WhenAdded_shouldReturnValidResponse() throws Exception {
+        this.addressDTO=new AddressDTO("Marine Drive,Mumbai","Mumbai","Mumbai","Maharashtra","India","400025");
+        String name="";
+        this.organisationDto=new OrganisationDTO(name,"INMHMU4120","www.directrice.com","Business",this.addressDTO,"12/12/2019");
+        String organisationDto=new Gson().toJson(this.organisationDto);
+        MvcResult result = this.mockMvc.perform(post("/directrice/banking/organisation/account")
+                .header("token","token")
+                .content(organisationDto)
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andReturn();
+        assertEquals(400,result.getResponse().getStatus());
+        assertEquals("Organisation Name cannot be empty.", new Gson().fromJson(result.getResponse().getContentAsString(), Response.class).getData());
+    }
 
 
+    //Organisation LicenceNumber
+    @Test
+    public void givenInValidOrganisationDTO_LEGAL_licenseNumber_NULL_WhenAdded_shouldReturnValidResponse() throws Exception {
+        this.addressDTO=new AddressDTO("Marine Drive,Mumbai","Mumbai","Mumbai","Maharashtra","India","400025");
 
+        String licenseNumber=null;
+        this.organisationDto=new OrganisationDTO("Directrice",licenseNumber,"www.directrice.com","Business",this.addressDTO,"12/12/2019");
+        String organisationDto=new Gson().toJson(this.organisationDto);
+        MvcResult result = this.mockMvc.perform(post("/directrice/banking/organisation/account")
+                .header("token","token")
+                .content(organisationDto)
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andReturn();
+        assertEquals(400,result.getResponse().getStatus());
+        assertEquals("Organisation licenseNumber cannot be empty.", new Gson().fromJson(result.getResponse().getContentAsString(), Response.class).getData());
+    }
+
+    @Test
+    public void givenInValidOrganisationDTO_LEGAL_licenseNumber_EMpty_WhenAdded_shouldReturnValidResponse() throws Exception {
+        this.addressDTO=new AddressDTO("Marine Drive,Mumbai","Mumbai","Mumbai","Maharashtra","India","400025");
+        String licenseNumber="";
+        this.organisationDto=new OrganisationDTO("Directrice",licenseNumber,"www.directrice.com","Business",this.addressDTO,"12/12/2019");
+        String organisationDto=new Gson().toJson(this.organisationDto);
+        MvcResult result = this.mockMvc.perform(post("/directrice/banking/organisation/account")
+                .header("token","token")
+                .content(organisationDto)
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andReturn();
+        assertEquals(400,result.getResponse().getStatus());
+        assertEquals("Organisation licenseNumber length should be greater than 4.", new Gson().fromJson(result.getResponse().getContentAsString(), Response.class).getData());
+    }
+
+    @Test
+    public void givenInValidOrganisationDTO_LEGAL_licenseNumber_Length_WhenAdded_shouldReturnValidResponse() throws Exception {
+        this.addressDTO=new AddressDTO("Marine Drive,Mumbai","Mumbai","Mumbai","Maharashtra","India","400025");
+        String licenseNumber="123";
+        this.organisationDto=new OrganisationDTO("Directrice",licenseNumber,"www.directrice.com","Business",this.addressDTO,"12/12/2019");
+        String organisationDto=new Gson().toJson(this.organisationDto);
+        MvcResult result = this.mockMvc.perform(post("/directrice/banking/organisation/account")
+                .header("token","token")
+                .content(organisationDto)
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andReturn();
+        assertEquals(400,result.getResponse().getStatus());
+        assertEquals("Organisation licenseNumber length should be greater than 4.", new Gson().fromJson(result.getResponse().getContentAsString(), Response.class).getData());
+    }
+    //Organisation Type
+    @Test
+    public void givenInValidOrganisationDTO_LEGAL_type_NULL_WhenAdded_shouldReturnValidResponse() throws Exception {
+        this.addressDTO=new AddressDTO("Marine Drive,Mumbai","Mumbai","Mumbai","Maharashtra","India","400025");
+
+        String type=null;
+        this.organisationDto=new OrganisationDTO("Directrice","INMH4256","www.directrice.com",type,this.addressDTO,"12/12/2019");
+        String organisationDto=new Gson().toJson(this.organisationDto);
+        MvcResult result = this.mockMvc.perform(post("/directrice/banking/organisation/account")
+                .header("token","token")
+                .content(organisationDto)
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andReturn();
+        assertEquals(400,result.getResponse().getStatus());
+        assertEquals("Organisation type cannot be empty.", new Gson().fromJson(result.getResponse().getContentAsString(), Response.class).getData());
+    }
+
+    @Test
+    public void givenInValidOrganisationDTO_LEGAL_type_EMpty_WhenAdded_shouldReturnValidResponse() throws Exception {
+        this.addressDTO=new AddressDTO("Marine Drive,Mumbai","Mumbai","Mumbai","Maharashtra","India","400025");
+        String type="";
+        this.organisationDto=new OrganisationDTO("Directrice","INMH4256","www.directrice.com",type,this.addressDTO,"12/12/2019");
+        String organisationDto=new Gson().toJson(this.organisationDto);
+        MvcResult result = this.mockMvc.perform(post("/directrice/banking/organisation/account")
+                .header("token","token")
+                .content(organisationDto)
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andReturn();
+        assertEquals(400,result.getResponse().getStatus());
+        assertEquals("Organisation type length should be greater than 2.", new Gson().fromJson(result.getResponse().getContentAsString(), Response.class).getData());
+    }
+
+    @Test
+    public void givenInValidOrganisationDTO_LEGAL_type_Length_WhenAdded_shouldReturnValidResponse() throws Exception {
+        this.addressDTO=new AddressDTO("Marine Drive,Mumbai","Mumbai","Mumbai","Maharashtra","India","400025");
+        String type="1";
+        this.organisationDto=new OrganisationDTO("Directrice","INMH4256","www.directrice.com",type,this.addressDTO,"12/12/2019");
+        String organisationDto=new Gson().toJson(this.organisationDto);
+        MvcResult result = this.mockMvc.perform(post("/directrice/banking/organisation/account")
+                .header("token","token")
+                .content(organisationDto)
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andReturn();
+        assertEquals(400,result.getResponse().getStatus());
+        assertEquals("Organisation type length should be greater than 2.", new Gson().fromJson(result.getResponse().getContentAsString(), Response.class).getData());
+    }
+    //Organisation registration Date.
+    @Test
+    public void givenInValidOrganisationDTO_LEGAL_registrationDate_NULL_WhenAdded_shouldReturnValidResponse() throws Exception {
+        this.addressDTO=new AddressDTO("Marine Drive,Mumbai","Mumbai","Mumbai","Maharashtra","India","400025");
+
+        String registrationDate=null;
+        this.organisationDto=new OrganisationDTO("Directrice","INMH4256","www.directrice.com","PVT LTD",this.addressDTO,registrationDate);
+        String organisationDto=new Gson().toJson(this.organisationDto);
+        MvcResult result = this.mockMvc.perform(post("/directrice/banking/organisation/account")
+                .header("token","token")
+                .content(organisationDto)
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andReturn();
+        assertEquals(400,result.getResponse().getStatus());
+        assertEquals("Organisation registrationDate cannot be empty.", new Gson().fromJson(result.getResponse().getContentAsString(), Response.class).getData());
+    }
+
+    @Test
+    public void givenInValidOrganisationDTO_LEGAL_registrationDate_EMpty_WhenAdded_shouldReturnValidResponse() throws Exception {
+        this.addressDTO=new AddressDTO("Marine Drive,Mumbai","Mumbai","Mumbai","Maharashtra","India","400025");
+        String registrationDate="";
+        this.organisationDto=new OrganisationDTO("Directrice","INMH4256","www.directrice.com","llc",this.addressDTO,registrationDate);
+        String organisationDto=new Gson().toJson(this.organisationDto);
+        MvcResult result = this.mockMvc.perform(post("/directrice/banking/organisation/account")
+                .header("token","token")
+                .content(organisationDto)
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andReturn();
+        assertEquals(400,result.getResponse().getStatus());
+        assertEquals("Organisation registrationDate cannot be empty.", new Gson().fromJson(result.getResponse().getContentAsString(), Response.class).getData());
+    }
+//EDITED
+    @Test
+    public void givenValidOrganisationDto_LEGAL_WhenEdited_shouldReturnValidResponse() throws Exception {
+        this.addressDTO=new AddressDTO("Marine Drive,Mumbai","Mumbai","Mumbai","Maharashtra","India","400025");
+
+        this.organisationDto=new OrganisationDTO("Directrice Pvt LTD","INMHMU4120","www.directrice.com","Business",this.addressDTO,"12/12/2019");
+        String organisationDto=new Gson().toJson(this.organisationDto);
+        MvcResult result = this.mockMvc.perform(put("/directrice/banking/organisation/account")
+                .header("token","token")
+                .header("accountId","accountId")
+                .content(organisationDto)
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andReturn();
+        assertEquals(200,result.getResponse().getStatus());
+    }
+
+    //Organisation name
+    @Test
+    public void givenInValidOrganisationDTO_LEGAL_Name_NULL_WhenEdited_shouldReturnValidResponse() throws Exception {
+        this.addressDTO=new AddressDTO("Marine Drive,Mumbai","Mumbai","Mumbai","Maharashtra","India","400025");
+
+        String name=null;
+        this.organisationDto=new OrganisationDTO(name,"INMHMU4120","www.directrice.com","Business",this.addressDTO,"12/12/2019");
+        String organisationDto=new Gson().toJson(this.organisationDto);
+        MvcResult result = this.mockMvc.perform(put("/directrice/banking/organisation/account")
+                .header("token","token")
+                .header("accountId","accountId")
+                .content(organisationDto)
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andReturn();
+        assertEquals(400,result.getResponse().getStatus());
+        assertEquals("Organisation Name cannot be empty.", new Gson().fromJson(result.getResponse().getContentAsString(), Response.class).getData());
+    }
+
+    @Test
+    public void givenInValidOrganisationDTO_LEGAL_Name_Empty_WhenEdited_shouldReturnValidResponse() throws Exception {
+        this.addressDTO=new AddressDTO("Marine Drive,Mumbai","Mumbai","Mumbai","Maharashtra","India","400025");
+        String name="";
+        this.organisationDto=new OrganisationDTO(name,"INMHMU4120","www.directrice.com","Business",this.addressDTO,"12/12/2019");
+        String organisationDto=new Gson().toJson(this.organisationDto);
+        MvcResult result = this.mockMvc.perform(put("/directrice/banking/organisation/account")
+                .header("token","token")
+                .header("accountId","accountId")
+                .content(organisationDto)
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andReturn();
+        assertEquals(400,result.getResponse().getStatus());
+        assertEquals("Organisation Name cannot be empty.", new Gson().fromJson(result.getResponse().getContentAsString(), Response.class).getData());
+    }
+
+
+    //Organisation LicenceNumber
+    @Test
+    public void givenInValidOrganisationDTO_LEGAL_licenseNumber_NULL_WhenEdited_shouldReturnValidResponse() throws Exception {
+        this.addressDTO=new AddressDTO("Marine Drive,Mumbai","Mumbai","Mumbai","Maharashtra","India","400025");
+
+        String licenseNumber=null;
+        this.organisationDto=new OrganisationDTO("Directrice",licenseNumber,"www.directrice.com","Business",this.addressDTO,"12/12/2019");
+        String organisationDto=new Gson().toJson(this.organisationDto);
+        MvcResult result = this.mockMvc.perform(put("/directrice/banking/organisation/account")
+                .header("token","token")
+                .header("accountId","accountId")
+                .content(organisationDto)
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andReturn();
+        assertEquals(400,result.getResponse().getStatus());
+        assertEquals("Organisation licenseNumber cannot be empty.", new Gson().fromJson(result.getResponse().getContentAsString(), Response.class).getData());
+    }
+
+    @Test
+    public void givenInValidOrganisationDTO_LEGAL_licenseNumber_EMpty_WhenEdited_shouldReturnValidResponse() throws Exception {
+        this.addressDTO=new AddressDTO("Marine Drive,Mumbai","Mumbai","Mumbai","Maharashtra","India","400025");
+        String licenseNumber="";
+        this.organisationDto=new OrganisationDTO("Directrice",licenseNumber,"www.directrice.com","Business",this.addressDTO,"12/12/2019");
+        String organisationDto=new Gson().toJson(this.organisationDto);
+        MvcResult result = this.mockMvc.perform(put("/directrice/banking/organisation/account")
+                .header("token","token")
+                .header("accountId","accountId")
+                .content(organisationDto)
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andReturn();
+        assertEquals(400,result.getResponse().getStatus());
+        assertEquals("Organisation licenseNumber length should be greater than 4.", new Gson().fromJson(result.getResponse().getContentAsString(), Response.class).getData());
+    }
+
+    @Test
+    public void givenInValidOrganisationDTO_LEGAL_licenseNumber_Length_WhenEdited_shouldReturnValidResponse() throws Exception {
+        this.addressDTO=new AddressDTO("Marine Drive,Mumbai","Mumbai","Mumbai","Maharashtra","India","400025");
+        String licenseNumber="123";
+        this.organisationDto=new OrganisationDTO("Directrice",licenseNumber,"www.directrice.com","Business",this.addressDTO,"12/12/2019");
+        String organisationDto=new Gson().toJson(this.organisationDto);
+        MvcResult result = this.mockMvc.perform(put("/directrice/banking/organisation/account")
+                .header("token","token")
+                .header("accountId","accountId")
+                .content(organisationDto)
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andReturn();
+        assertEquals(400,result.getResponse().getStatus());
+        assertEquals("Organisation licenseNumber length should be greater than 4.", new Gson().fromJson(result.getResponse().getContentAsString(), Response.class).getData());
+    }
+    //Organisation Type
+    @Test
+    public void givenInValidOrganisationDTO_LEGAL_type_NULL_WhenEdited_shouldReturnValidResponse() throws Exception {
+        this.addressDTO=new AddressDTO("Marine Drive,Mumbai","Mumbai","Mumbai","Maharashtra","India","400025");
+
+        String type=null;
+        this.organisationDto=new OrganisationDTO("Directrice","INMH4256","www.directrice.com",type,this.addressDTO,"12/12/2019");
+        String organisationDto=new Gson().toJson(this.organisationDto);
+        MvcResult result = this.mockMvc.perform(put("/directrice/banking/organisation/account")
+                .header("token","token")
+                .header("accountId","accountId")
+                .content(organisationDto)
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andReturn();
+        assertEquals(400,result.getResponse().getStatus());
+        assertEquals("Organisation type cannot be empty.", new Gson().fromJson(result.getResponse().getContentAsString(), Response.class).getData());
+    }
+
+    @Test
+    public void givenInValidOrganisationDTO_LEGAL_type_EMpty_WhenEdited_shouldReturnValidResponse() throws Exception {
+        this.addressDTO=new AddressDTO("Marine Drive,Mumbai","Mumbai","Mumbai","Maharashtra","India","400025");
+        String type="";
+        this.organisationDto=new OrganisationDTO("Directrice","INMH4256","www.directrice.com",type,this.addressDTO,"12/12/2019");
+        String organisationDto=new Gson().toJson(this.organisationDto);
+        MvcResult result = this.mockMvc.perform(put("/directrice/banking/organisation/account")
+                .header("token","token")
+                .header("accountId","accountId")
+                .content(organisationDto)
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andReturn();
+        assertEquals(400,result.getResponse().getStatus());
+        assertEquals("Organisation type length should be greater than 2.", new Gson().fromJson(result.getResponse().getContentAsString(), Response.class).getData());
+    }
+
+    @Test
+    public void givenInValidOrganisationDTO_LEGAL_type_Length_WhenEdited_shouldReturnValidResponse() throws Exception {
+        this.addressDTO=new AddressDTO("Marine Drive,Mumbai","Mumbai","Mumbai","Maharashtra","India","400025");
+        String type="1";
+        this.organisationDto=new OrganisationDTO("Directrice","INMH4256","www.directrice.com",type,this.addressDTO,"12/12/2019");
+        String organisationDto=new Gson().toJson(this.organisationDto);
+        MvcResult result = this.mockMvc.perform(put("/directrice/banking/organisation/account")
+                .header("token","token")
+                .header("accountId","accountId")
+                .content(organisationDto)
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andReturn();
+        assertEquals(400,result.getResponse().getStatus());
+        assertEquals("Organisation type length should be greater than 2.", new Gson().fromJson(result.getResponse().getContentAsString(), Response.class).getData());
+    }
+    //Organisation registration Date.
+    @Test
+    public void givenInValidOrganisationDTO_LEGAL_registrationDate_NULL_WhenEdited_shouldReturnValidResponse() throws Exception {
+        this.addressDTO=new AddressDTO("Marine Drive,Mumbai","Mumbai","Mumbai","Maharashtra","India","400025");
+
+        String registrationDate=null;
+        this.organisationDto=new OrganisationDTO("Directrice","INMH4256","www.directrice.com","PVT LTD",this.addressDTO,registrationDate);
+        String organisationDto=new Gson().toJson(this.organisationDto);
+        MvcResult result = this.mockMvc.perform(put("/directrice/banking/organisation/account")
+                .header("token","token")
+                .header("accountId","accountId")
+                .content(organisationDto)
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andReturn();
+        assertEquals(400,result.getResponse().getStatus());
+        assertEquals("Organisation registrationDate cannot be empty.", new Gson().fromJson(result.getResponse().getContentAsString(), Response.class).getData());
+    }
+
+    @Test
+    public void givenInValidOrganisationDTO_LEGAL_registrationDate_EMpty_WhenEdited_shouldReturnValidResponse() throws Exception {
+        this.addressDTO=new AddressDTO("Marine Drive,Mumbai","Mumbai","Mumbai","Maharashtra","India","400025");
+        String registrationDate="";
+        this.organisationDto=new OrganisationDTO("Directrice","INMH4256","www.directrice.com","llc",this.addressDTO,registrationDate);
+        String organisationDto=new Gson().toJson(this.organisationDto);
+        MvcResult result = this.mockMvc.perform(put("/directrice/banking/organisation/account")
+                .header("token","token")
+                .header("accountId","accountId")
+                .content(organisationDto)
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andReturn();
+        assertEquals(400,result.getResponse().getStatus());
+        assertEquals("Organisation registrationDate cannot be empty.", new Gson().fromJson(result.getResponse().getContentAsString(), Response.class).getData());
+    }
+
+
+    //Get Organistaion
+    @Test
+    public void givenValidTokenAndAccountId_LEGAL_WhenGetting_shouldReturnValidResponse() throws Exception {
+        MvcResult result = this.mockMvc.perform(get("/directrice/banking/organisation/456mhin")
+                .header("token","token")
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andReturn();
+        assertEquals(200,result.getResponse().getStatus());
+    }
+    
 }

@@ -29,6 +29,7 @@ dependencies {
     compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
     compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
     implementation 'junit:junit:4.12'
+    compile 'org.springframework.boot:spring-boot-starter-data-mongodb'
 
 }
 

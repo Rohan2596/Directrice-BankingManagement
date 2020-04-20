@@ -2,6 +2,9 @@ package com.directrice.banking.controller;
 
 import com.directrice.banking.dto.AddressDTO;
 import com.directrice.banking.response.Response;
+import com.directrice.banking.service.BankingAddressService;
+import com.directrice.banking.service.BankingAddressServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -14,6 +17,9 @@ import java.time.LocalDateTime;
 @RequestMapping("/directrice/banking")
 public class BankingAddressController {
 
+    @Autowired
+    private BankingAddressServiceImpl bankingAddressService;
+
     @PostMapping("/address")
     public ResponseEntity<Response> addAddressToAccount(@RequestHeader String token,
                                                         @RequestHeader String accountId,
@@ -23,6 +29,7 @@ public class BankingAddressController {
             return new ResponseEntity<Response>(new Response("Error Message.",bindingResult.getAllErrors().get(0).getDefaultMessage(),LocalDateTime.now().toString()),
                     HttpStatus.BAD_REQUEST);
         }
+        bankingAddressService.addUserAddress(addressDTO);
         return new ResponseEntity<Response>(new Response(), HttpStatus.CREATED);
     }
 

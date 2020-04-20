@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
@@ -1214,6 +1215,40 @@ public class BankingAccountControllerTest {
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
         assertEquals(200,result.getResponse().getStatus());
+    }
+
+    //Upload KYC file image
+
+    @Test
+    public void givenValidTokenAndAccountId_UPLOAD_IMAGE_whenAdded_shouldReturnResponse() throws Exception {
+    MockMultipartFile imageFile=new MockMultipartFile("file","1.png","image/png","Some Data:".getBytes());
+    MvcResult result = this.mockMvc.perform(multipart("/directrice/banking/kyc/upload")
+            .file(imageFile)
+            .header("token", "token")
+            .header("accountId","accountId"))
+            .andReturn();
+        assertEquals(200,result.getResponse().getStatus());
+    }
+
+    @Test
+    public void givenValidTokenAndAccountId_UPLOAD_WrongFormatIMAGE_whenAdded_shouldReturnResponse() throws Exception {
+        MockMultipartFile imageFile=new MockMultipartFile("file","1.svg","image/svg","Some Data:".getBytes());
+        MvcResult result = this.mockMvc.perform(multipart("/directrice/banking/kyc/upload")
+                .file(imageFile)
+                .header("token", "token")
+                .header("accountId","accountId"))
+                .andReturn();
+        assertEquals(400,result.getResponse().getStatus());
+    }
+    @Test
+    public void givenValidTokenAndAccountId_UPLOAD_EmptyIMAGE_whenAdded_shouldReturnResponse() throws Exception {
+        MockMultipartFile imageFile=new MockMultipartFile("file","","","Some Data:".getBytes());
+        MvcResult result = this.mockMvc.perform(multipart("/directrice/banking/kyc/upload")
+                .file(imageFile)
+                .header("token", "token")
+                .header("accountId","accountId"))
+                .andReturn();
+        assertEquals(400,result.getResponse().getStatus());
     }
     
 }

@@ -2,10 +2,13 @@ package com.directrice.banking.controller;
 
 import com.directrice.banking.dto.*;
 import com.directrice.banking.response.Response;
+import com.directrice.banking.service.BankingAccountService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
@@ -13,6 +16,9 @@ import java.time.LocalDateTime;
 @RestController
 @RequestMapping("/directrice/banking")
 public class BankingAccountController {
+
+    @Autowired
+    private BankingAccountService bankingAccountService;
 
     @PostMapping("/user/account")
     public ResponseEntity<Response> createUserAccount(@RequestHeader String token,
@@ -23,6 +29,7 @@ public class BankingAccountController {
             return new ResponseEntity<Response>(new Response("Error Message.",bindingResult.getAllErrors().get(0).getDefaultMessage(),LocalDateTime.now().toString()),
                     HttpStatus.BAD_REQUEST);
         }
+        bankingAccountService.addUserAccount(userAccountDTO);
         return new ResponseEntity<Response>(new Response(userAccountDTO.toString(),"",LocalDateTime.now().toString()), HttpStatus.CREATED);
     }
 
@@ -85,5 +92,18 @@ public class BankingAccountController {
         return new ResponseEntity<>(new Response(),HttpStatus.OK);
     }
 
+    @PostMapping("/kyc/upload")
+    public ResponseEntity<Response>addKYCDetails(@RequestHeader String token,
+                                                 @RequestHeader String accountId,
+                                                 @RequestParam("file") MultipartFile multipartFile){
+            if (multipartFile.getOriginalFilename().equals("") || multipartFile.getSize() == 0)
+                return new ResponseEntity<>(new Response(), HttpStatus.BAD_REQUEST);
+            if (multipartFile.getContentType().equals("image/png")
+                    || multipartFile.getContentType().equals("image/jpg")
+                    || multipartFile.getContentType().equals("image/jpeg"))
+                return new ResponseEntity<>(new Response(), HttpStatus.OK);
+            return new ResponseEntity<Response>(new Response(), HttpStatus.BAD_REQUEST);
+
+        }
 
 }

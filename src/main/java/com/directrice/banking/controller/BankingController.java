@@ -16,7 +16,12 @@ import java.time.LocalDateTime;
 @RequestMapping("/directrice/banking")
 public class BankingController {
 
-
+/*
+* 1)To credit and debit of balance account
+* 2)to transfer
+* 3)loaning porcess.
+* 4)emi process to for other vendors
+* */
 
 
 }

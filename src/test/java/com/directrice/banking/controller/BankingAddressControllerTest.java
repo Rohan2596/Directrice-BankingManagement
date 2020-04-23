@@ -3,11 +3,14 @@ package com.directrice.banking.controller;
 import com.directrice.banking.dto.AddressDTO;
 import com.directrice.banking.dto.UserAccountDTO;
 import com.directrice.banking.response.Response;
+import com.directrice.banking.service.BankingAccountServiceImpl;
+import com.directrice.banking.service.BankingAddressServiceImpl;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -22,6 +25,9 @@ public class BankingAddressControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    @MockBean
+    private BankingAddressServiceImpl bankingAddressService;
+
     private AddressDTO addressDTO;
 
 
@@ -33,7 +39,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(post("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -48,7 +54,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(post("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -65,7 +71,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(post("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -81,7 +87,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(post("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -97,7 +103,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(post("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -113,7 +119,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(post("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -132,7 +138,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(post("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -149,7 +155,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(post("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -165,7 +171,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(post("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -181,7 +187,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(post("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -197,7 +203,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(post("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -217,7 +223,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(post("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -234,7 +240,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(post("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -250,7 +256,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(post("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -266,7 +272,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(post("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -282,7 +288,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(post("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -302,7 +308,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(post("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -319,7 +325,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(post("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -335,7 +341,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(post("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -351,7 +357,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(post("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -367,7 +373,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(post("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -385,7 +391,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(post("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -402,7 +408,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(post("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -418,7 +424,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(post("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -434,7 +440,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(post("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -450,7 +456,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(post("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -469,7 +475,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(post("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -486,7 +492,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(post("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -502,7 +508,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(post("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -518,7 +524,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(post("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -534,7 +540,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(post("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -551,7 +557,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(put("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -567,7 +573,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(put("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -584,7 +590,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(put("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -600,7 +606,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(put("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -616,7 +622,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(put("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -632,7 +638,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(put("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -651,7 +657,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(put("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -668,7 +674,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(put("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -684,7 +690,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(put("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -700,7 +706,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(put("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -716,7 +722,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(put("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -736,7 +742,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(put("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -753,7 +759,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(put("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -769,7 +775,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(put("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -785,7 +791,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(put("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -801,7 +807,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(put("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -821,7 +827,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(put("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -838,7 +844,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(put("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -854,7 +860,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(put("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -870,7 +876,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(put("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -886,7 +892,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(put("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -904,7 +910,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(put("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -921,7 +927,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(put("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -937,7 +943,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(put("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -953,7 +959,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(put("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -969,7 +975,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(put("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -988,7 +994,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(put("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -1005,7 +1011,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(put("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -1021,7 +1027,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(put("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -1037,7 +1043,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(put("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -1053,7 +1059,7 @@ public class BankingAddressControllerTest {
         String addressDTO=new Gson().toJson(this.addressDTO);
         MvcResult result = this.mockMvc.perform(put("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .content(addressDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
@@ -1067,10 +1073,10 @@ public class BankingAddressControllerTest {
 
     //Getting Address of User.
     @Test
-    void givenValidToken_ValidAccountId_WhenGettingUser_ShouldReturnValidResponse() throws Exception {
+    void givenValidToken_ValidaccountNumber_WhenGettingUser_ShouldReturnValidResponse() throws Exception {
               MvcResult result = this.mockMvc.perform(get("/directrice/banking/address")
                 .header("token","token")
-                .header("accountId","accountId")
+                .header("accountNumber","accountNumber")
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn();
         assertEquals(200, result.getResponse().getStatus());

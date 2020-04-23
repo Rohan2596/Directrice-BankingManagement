@@ -3,15 +3,23 @@ package com.directrice.banking.entity;
 
 import com.directrice.banking.dto.AddressDTO;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.FieldType;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
 @Document(collection = "address")
+@Getter
+@Setter
 public class Address {
 
     @Id
-    private String addressId;
+    private String id;
+    private String userId;
+    private String accountNo;
     private String address;
     private String town;
     private String district;
@@ -19,13 +27,4 @@ public class Address {
     private String country;
     private String postalCode;
 
-
-    public Address(AddressDTO addressDTO) {
-        this.address=addressDTO.getAddress();
-        this.town=addressDTO.getTown();
-        this.district=addressDTO.getDistrict();
-        this.state=addressDTO.getState();
-        this.country=addressDTO.getCountry();
-        this.postalCode=addressDTO.getPostalCode();
-    }
 }

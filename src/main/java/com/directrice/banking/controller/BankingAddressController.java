@@ -22,20 +22,20 @@ public class BankingAddressController {
 
     @PostMapping("/address")
     public ResponseEntity<Response> addAddressToAccount(@RequestHeader String token,
-                                                        @RequestHeader String accountId,
+                                                        @RequestHeader String accountNumber,
                                                         @Valid @RequestBody AddressDTO addressDTO,
                                                         BindingResult bindingResult){
         if (bindingResult.hasErrors()){
             return new ResponseEntity<Response>(new Response("Error Message.",bindingResult.getAllErrors().get(0).getDefaultMessage(),LocalDateTime.now().toString()),
                     HttpStatus.BAD_REQUEST);
         }
-        bankingAddressService.addUserAddress(addressDTO);
+        bankingAddressService.addUserAddress(token,accountNumber,addressDTO);
         return new ResponseEntity<Response>(new Response(), HttpStatus.CREATED);
     }
 
     @PutMapping("/address")
     public ResponseEntity<Response> editAddressToAccount(@RequestHeader String token,
-                                                         @RequestHeader String accountId,
+                                                         @RequestHeader String accountNumber,
                                                          @Valid  @RequestBody AddressDTO addressDTO,
                                                          BindingResult bindingResult){
         if (bindingResult.hasErrors()){
@@ -44,12 +44,13 @@ public class BankingAddressController {
                                                             LocalDateTime.now().toString()),
                     HttpStatus.BAD_REQUEST);
         }
+        bankingAddressService.editUserAddress(token,accountNumber,addressDTO);
         return new ResponseEntity<Response>(new Response(), HttpStatus.CREATED);
     }
 
     @GetMapping("/address")
     public ResponseEntity<Response> getUserAddress(@RequestHeader String token,
-                                                   @RequestHeader String accountId){
+                                                   @RequestHeader String accountNumber){
         return new ResponseEntity<Response>(new Response(), HttpStatus.OK);
 
     }

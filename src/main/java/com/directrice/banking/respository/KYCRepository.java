@@ -5,5 +5,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserKYCRepository extends MongoRepository<KycDetails,String> {
+public interface KYCRepository extends MongoRepository<KycDetails,String> {
 }

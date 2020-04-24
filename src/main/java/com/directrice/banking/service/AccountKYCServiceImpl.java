@@ -4,6 +4,7 @@ import com.directrice.banking.entity.KycDetails;
 import com.directrice.banking.respository.KYCRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -13,15 +14,14 @@ public class AccountKYCServiceImpl implements AccountKYCService {
     @Autowired
     private KYCRepository KYCRepository;
 
-    @Override
-    public KycDetails addUserKycDetails() {
-            KycDetails kycDetails=new KycDetails();
 
-        return KYCRepository.save(kycDetails);
+    @Override
+    public KycDetails addUserKycDetails(String token, String accountNumber, MultipartFile file) {
+        return null;
     }
 
     @Override
-    public KycDetails editUserKycDetails(String token, String accountNo) {
+    public KycDetails editUserKycDetails(String token, String accountNumber, MultipartFile file) {
         return null;
     }
 

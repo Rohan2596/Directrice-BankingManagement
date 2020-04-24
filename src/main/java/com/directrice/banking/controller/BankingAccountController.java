@@ -111,18 +111,7 @@ public class BankingAccountController {
         return new ResponseEntity<>(new Response(),HttpStatus.OK);
     }
 
-    @PostMapping("/kyc/upload")
-    public ResponseEntity<Response>addKYCDetails(@RequestHeader String token,
-                                                 @RequestHeader String accountNumber,
-                                                 @RequestParam("file") MultipartFile multipartFile){
-            if (multipartFile.getOriginalFilename().equals("") || multipartFile.getSize() == 0)
-                return new ResponseEntity<>(new Response(), HttpStatus.BAD_REQUEST);
-            if (multipartFile.getContentType().equals("image/png")
-                    || multipartFile.getContentType().equals("image/jpg")
-                    || multipartFile.getContentType().equals("image/jpeg"))
-                return new ResponseEntity<>(new Response("", accountKYCService.addUserKycDetails(),LocalDateTime.now().toString()), HttpStatus.OK);
-            return new ResponseEntity<Response>(new Response(), HttpStatus.BAD_REQUEST);
 
-        }
+
 
 }

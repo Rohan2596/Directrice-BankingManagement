@@ -42,8 +42,6 @@ public class BankingAccountControllerTest {
     @MockBean
     BankingAccountServiceImpl bankingAccountService;
 
-    @MockBean
-    AccountKYCServiceImpl accountKYCService;
 
     //added
     @Test
@@ -1244,38 +1242,5 @@ public class BankingAccountControllerTest {
         assertEquals(200,result.getResponse().getStatus());
     }
 
-    //Upload KYC file image
 
-    @Test
-    public void givenValidTokenAndaccountNumber_UPLOAD_IMAGE_whenAdded_shouldReturnResponse() throws Exception {
-    MockMultipartFile imageFile=new MockMultipartFile("file","1.png","image/png","Some Data:".getBytes());
-    MvcResult result = this.mockMvc.perform(multipart("/directrice/banking/kyc/upload")
-            .file(imageFile)
-            .header("token", "token")
-            .header("accountNumber","accountNumber"))
-            .andReturn();
-        assertEquals(200,result.getResponse().getStatus());
-    }
-
-    @Test
-    public void givenValidTokenAndaccountNumber_UPLOAD_WrongFormatIMAGE_whenAdded_shouldReturnResponse() throws Exception {
-        MockMultipartFile imageFile=new MockMultipartFile("file","1.svg","image/svg","Some Data:".getBytes());
-        MvcResult result = this.mockMvc.perform(multipart("/directrice/banking/kyc/upload")
-                .file(imageFile)
-                .header("token", "token")
-                .header("accountNumber","accountNumber"))
-                .andReturn();
-        assertEquals(400,result.getResponse().getStatus());
-    }
-    @Test
-    public void givenValidTokenAndaccountNumber_UPLOAD_EmptyIMAGE_whenAdded_shouldReturnResponse() throws Exception {
-        MockMultipartFile imageFile=new MockMultipartFile("file","","","Some Data:".getBytes());
-        MvcResult result = this.mockMvc.perform(multipart("/directrice/banking/kyc/upload")
-                .file(imageFile)
-                .header("token", "token")
-                .header("accountNumber","accountNumber"))
-                .andReturn();
-        assertEquals(400,result.getResponse().getStatus());
-    }
-    
 }

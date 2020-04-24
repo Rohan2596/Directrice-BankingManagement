@@ -10,7 +10,6 @@ public class BankingException extends RuntimeException {
     }
 
     public enum ExceptionTypes{
-        INVALID_ACCOUNT_ID("Invalid Account Id."),
         ALREADY_ACCOUNT_CREATED("Account Already Created."),
         INVALID_USER_ID("Invalid User Id."),
         INVALID_ACCOUNT_NUMBER("Invalid Account Number.");

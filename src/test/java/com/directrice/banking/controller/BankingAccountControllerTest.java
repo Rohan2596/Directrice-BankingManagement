@@ -6,6 +6,7 @@ import com.directrice.banking.dto.AddressDTO;
 import com.directrice.banking.dto.OrganisationDTO;
 import com.directrice.banking.dto.UserAccountDTO;
 import com.directrice.banking.response.Response;
+import com.directrice.banking.service.AccountKYCServiceImpl;
 import com.directrice.banking.service.BankingAccountServiceImpl;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.Test;
@@ -40,6 +41,9 @@ public class BankingAccountControllerTest {
 
     @MockBean
     BankingAccountServiceImpl bankingAccountService;
+
+    @MockBean
+    AccountKYCServiceImpl accountKYCService;
 
     //added
     @Test

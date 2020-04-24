@@ -43,6 +43,10 @@ public class BankingAddressServiceImpl implements BankingAddressService {
         if(userAccountUserId.isPresent()){
             Optional<UserAccount> userAccountNO=userAccountRepository.findByAccountNumber(accountNo);
             if(userAccountNO.isPresent()){
+               Optional<Address> optionalAddress=addressRepository.findByAccountNo(accountNo);
+               if (optionalAddress.isPresent()){
+                   throw  new BankingException("Address Already Added.", BankingException.ExceptionTypes.ALREADY_ACCOUNT_CREATED);
+               }
 
                 Address address=new Address();
                 mapping(address,addressDTO);
@@ -66,13 +70,16 @@ public class BankingAddressServiceImpl implements BankingAddressService {
         if(userAccountUserId.isPresent()){
             Optional<UserAccount> userAccountNO=userAccountRepository.findByAccountNumber(accountNo);
             if(userAccountNO.isPresent()){
-
-                Address address=new Address();
+                Optional<Address> addressOptional=addressRepository.findByAccountNo(accountNo);
+                if (!addressOptional.isPresent()){
+                    throw  new BankingException("Address Already Added.", BankingException.ExceptionTypes.ALREADY_ACCOUNT_CREATED);
+                }
+              Address address=addressOptional.get();
                 mapping(address,addressDTO);
                 addressRepository.save(address);
                 userAccountNO.get().setAddress(address);
                 userAccountRepository.save(userAccountNO.get());
-                return "Address Added.";
+                return "Address Edited.";
             }
             throw new BankingException("Invalid Account Number.", BankingException.ExceptionTypes.INVALID_ACCOUNT_NUMBER);
         }
@@ -82,11 +89,25 @@ public class BankingAddressServiceImpl implements BankingAddressService {
 
     @Override
     public Address getUserAddress(String token, String accountNo) {
-        return null;
+        String userId=authenticationService.getUserId(token);
+        Optional<UserAccount> userAccountUserId=userAccountRepository.findByUserId(userId);
+        if(userAccountUserId.isPresent()) {
+            Optional<Address> addressOptional = addressRepository.findByAccountNo(accountNo);
+            if (addressOptional.isPresent()) {
+                Address address = addressOptional.get();
+                return address;
+            }
+
+            throw new BankingException("Invalid Account no.", BankingException.ExceptionTypes.INVALID_ACCOUNT_NUMBER);
+        }
+        throw new BankingException("Invalid User id.", BankingException.ExceptionTypes.INVALID_USER_ID);
+
     }
 
     @Override
-    public List<Address> getUserAddress() {
-        return null;
+    public List<Address> getAllUserAddress() {
+        return addressRepository.findAll();
     }
+
+
 }

@@ -29,8 +29,8 @@ public class BankingAddressController {
             return new ResponseEntity<Response>(new Response("Error Message.",bindingResult.getAllErrors().get(0).getDefaultMessage(),LocalDateTime.now().toString()),
                     HttpStatus.BAD_REQUEST);
         }
-        bankingAddressService.addUserAddress(token,accountNumber,addressDTO);
-        return new ResponseEntity<Response>(new Response(), HttpStatus.CREATED);
+        String addAddress=bankingAddressService.addUserAddress(token,accountNumber,addressDTO);
+        return new ResponseEntity<Response>(new Response("Address Created.",addAddress,LocalDateTime.now().toString()), HttpStatus.CREATED);
     }
 
     @PutMapping("/address")
@@ -44,14 +44,21 @@ public class BankingAddressController {
                                                             LocalDateTime.now().toString()),
                     HttpStatus.BAD_REQUEST);
         }
-        bankingAddressService.editUserAddress(token,accountNumber,addressDTO);
-        return new ResponseEntity<Response>(new Response(), HttpStatus.CREATED);
+        String updateAddress=bankingAddressService.editUserAddress(token,accountNumber,addressDTO);
+        return new ResponseEntity<Response>(new Response("Updated Account Address.",updateAddress,LocalDateTime.now().toString()), HttpStatus.CREATED);
     }
 
     @GetMapping("/address")
     public ResponseEntity<Response> getUserAddress(@RequestHeader String token,
                                                    @RequestHeader String accountNumber){
-        return new ResponseEntity<Response>(new Response(), HttpStatus.OK);
+
+        return new ResponseEntity<Response>(new Response("User Address For no:-"+accountNumber,bankingAddressService.getUserAddress(token, accountNumber),LocalDateTime.now().toString()), HttpStatus.OK);
+
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<Response> getAllUserAddress(){
+        return new ResponseEntity<Response>(new Response( "All User Address",bankingAddressService.getAllUserAddress(),LocalDateTime.now().toString()), HttpStatus.OK);
 
     }
 }

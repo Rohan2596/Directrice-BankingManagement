@@ -1083,4 +1083,15 @@ public class BankingAddressControllerTest {
 
     }
 
+    //Getting  All Address
+
+    @Test
+    void givenAll_WhenGettingUser_ShouldReturnValidResponse() throws Exception {
+        MvcResult result = this.mockMvc.perform(get("/directrice/banking/all")
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andReturn();
+        assertEquals(200, result.getResponse().getStatus());
+
+    }
+
 }

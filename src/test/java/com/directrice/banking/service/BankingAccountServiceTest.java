@@ -217,7 +217,6 @@ public class BankingAccountServiceTest {
 
         }
     }
-    //Add address to user account
     //add KYC to user account
     //get all UserAccount
     @Test

@@ -2,9 +2,7 @@ package com.directrice.banking.entity;
 
 
 import com.directrice.banking.dto.AddressDTO;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -14,6 +12,8 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
 @Document(collection = "address")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Address {
 
     @Id

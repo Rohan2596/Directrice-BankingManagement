@@ -11,6 +11,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 
 @SpringBootTest
@@ -55,4 +56,37 @@ public class BankingKYCControllerTest {
                 .andReturn();
         assertEquals(400,result.getResponse().getStatus());
     }
+
+    //get kyc Details
+    @Test
+    public void givenValidTokenAndAccountNumber_WhenVerified_shouldReturnListofKYCDetails() throws Exception {
+        MvcResult result = this.mockMvc.perform(get("/directrice/banking/kyc/D2020K251049")
+                .header("token", "token"))
+                .andReturn();
+        assertEquals(200,result.getResponse().getStatus());
+    }
+
+    @Test
+    public void givenInValidTokenAndAccountNumber_WhenVerified_shouldReturnListofKYCDetails() throws Exception {
+        MvcResult result = this.mockMvc.perform(get("/directrice/banking/kyc/D2020K251049"))
+                .andReturn();
+        assertEquals(400,result.getResponse().getStatus());
+    }
+
+    @Test
+    public void givenValidTokenAndInValidAccountNumber_WhenVerified_shouldReturnListofKYCDetails() throws Exception {
+        MvcResult result = this.mockMvc.perform(get("/directrice/banking/kyc"))
+                .andReturn();
+        assertEquals(404,result.getResponse().getStatus());
+    }
+
+    //get all kyc Details
+    @Test
+    public void givenValidTokenAndAccountNumber_WhenVerified_ALL_shouldReturnListofKYCDetails() throws Exception {
+        MvcResult result = this.mockMvc.perform(get("/directrice/banking/kyc/all")
+                .header("token", "token"))
+                .andReturn();
+        assertEquals(200,result.getResponse().getStatus());
+    }
+
 }

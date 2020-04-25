@@ -52,8 +52,10 @@ public class UserAccount {
     /*
      * Adding KYCDetails to user account
      * */
+    private String kycStatus;
     @DBRef
     private KycDetails kycDetails;
+
 
     /*
      * Adding different Cards to user account(min-1,max-2)

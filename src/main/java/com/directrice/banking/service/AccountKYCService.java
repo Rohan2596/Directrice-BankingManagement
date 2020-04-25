@@ -8,7 +8,6 @@ import java.util.List;
 public interface AccountKYCService {
 
     KycDetails addUserKycDetails(String token, String accountNumber, MultipartFile file);
-    KycDetails editUserKycDetails(String token, String accountNumber, MultipartFile file);
-    KycDetails getUserKycDetails(String token,String accountNo);
+   KycDetails getUserKycDetails(String token,String accountNo);
     List<KycDetails> getAllUserKycDetails();
 }

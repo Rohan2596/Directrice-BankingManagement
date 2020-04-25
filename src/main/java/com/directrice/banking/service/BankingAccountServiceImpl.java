@@ -6,6 +6,7 @@ import com.directrice.banking.entity.OrganisationAccount;
 import com.directrice.banking.entity.UserAccount;
 import com.directrice.banking.enumeration.AccountStatus;
 import com.directrice.banking.enumeration.AccountType;
+import com.directrice.banking.enumeration.KYCStatus;
 import com.directrice.banking.exception.BankingException;
 import com.directrice.banking.respository.UserAccountRepository;
 import com.directrice.banking.supportService.AuthenticationService;
@@ -36,6 +37,7 @@ public class BankingAccountServiceImpl implements BankingAccountService {
         userAccount.setNationality(userAccountDTO.getNationality());
         userAccount.setOccupation(userAccountDTO.getOccupation());
         userAccount.setStatus(AccountStatus.ACTIVE_ACCOUNT.name());
+        userAccount.setKycStatus(KYCStatus.PROCESSING_STATE.name());
     }
 
     @Override

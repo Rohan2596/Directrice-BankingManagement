@@ -37,13 +37,14 @@ public class BankingKYCController {
     @GetMapping("/{accountNumber}")
     public ResponseEntity<Response> getUserKycDetailsList(@RequestHeader String token,
                                                           @PathVariable String accountNumber){
-               return new ResponseEntity<Response>(new Response(), HttpStatus.OK);
+
+               return new ResponseEntity<Response>(new Response("KYC",accountKYCService.getUserKycDetails(token,accountNumber),LocalDateTime.now().toString()), HttpStatus.OK);
 
     }
 
     @GetMapping("/all")
     public ResponseEntity<Response>getAllKYCDetails(){
-        return new ResponseEntity<Response>(new Response(), HttpStatus.OK);
+        return new ResponseEntity<Response>(new Response("KYC List",accountKYCService.getAllUserKycDetails(),LocalDateTime.now().toString()), HttpStatus.OK);
     }
 
 }

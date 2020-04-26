@@ -63,4 +63,7 @@ public class UserAccount {
      * */
     @DBRef
     private UserCardDetails userCardDetailsList;
+
+    @DBRef
+    private Balance balance;
 }

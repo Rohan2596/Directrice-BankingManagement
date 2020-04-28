@@ -30,11 +30,32 @@ public class BankingController {
 @Autowired
 private BankingServiceImpl bankingService;
 
-  @PostMapping
+
+    @PostMapping
+    public ResponseEntity<Response>addBalance(@RequestHeader String token,
+                                                 @RequestParam String accountNumber,
+                                                 @RequestBody  BalanceDTO balanceDTO){
+        return new ResponseEntity<>(new Response("",bankingService.addBalance(token, accountNumber, balanceDTO),LocalDateTime.now().toString()),HttpStatus.OK);
+    }
+
+
+
+    @PutMapping
   public ResponseEntity<Response>updateBalance(@RequestHeader String token,
                                                @RequestParam String accountNumber,
                                                @RequestBody  BalanceDTO balanceDTO){
       return new ResponseEntity<>(new Response("",bankingService.updateBalance(token, accountNumber, balanceDTO),LocalDateTime.now().toString()),HttpStatus.OK);
+  }
+
+  @GetMapping("/account")
+  public ResponseEntity<Response> getUserAccount(@RequestHeader String token,
+                                                 @RequestParam String accountNumber){
+      return new ResponseEntity<Response>(new Response("User Account balances:-",bankingService.getUserbalance(token, accountNumber),LocalDateTime.now().toString()),HttpStatus.OK);
+  }
+
+  @GetMapping
+  public ResponseEntity<Response> getAllUserAccount(){
+      return new ResponseEntity<Response>(new Response("User Account balances:-",bankingService.getAllBalances(""),LocalDateTime.now().toString()),HttpStatus.OK);
   }
 
 }

@@ -7,7 +7,9 @@ import java.util.List;
 
 public interface BankingService {
 
-    Balance updateBalance(String token,String accountNumber,BalanceDTO balanceDTO);
+
+    Balance addBalance(String token,String accountNumber,BalanceDTO balanceDTO);
+    String updateBalance(String token,String accountNumber,BalanceDTO balanceDTO);
     Balance getUserbalance(String token,String accountNumber);
     List<Balance> getAllBalances(String token);
 }

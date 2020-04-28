@@ -26,19 +26,50 @@ public class BankingServiceImpl implements BankingService {
     @Autowired
     private BalanceRepository balanceRepository;
 
+
     @Override
-    public Balance updateBalance(String token, String accountNumber, BalanceDTO balanceDTO) {
+    public Balance addBalance(String token, String accountNumber, BalanceDTO balanceDTO) {
         String userId=authenticationService.getUserId(token);
         Optional<UserAccount> userAccountUserId=userAccountRepository.findByUserId(userId);
         if(userAccountUserId.isPresent()){
             Optional<UserAccount> userAccountNO=userAccountRepository.findByAccountNumber(accountNumber);
             if(userAccountNO.isPresent()){
-               Balance balance=new Balance();
-               balance.setAccountNo(accountNumber);
-               balance.setUserId(userId);
+
+                Balance balance=new Balance();
+                balance.setAccountNo(accountNumber);
+                balance.setUserId(userId);
+                balance.setAmount(balanceDTO.getAmount());
+                balance.setCurrency(balanceDTO.getCurrency());
+                Balance addBalance=balanceRepository.save(balance);
+                userAccountNO.get().setBalance(addBalance);
+                userAccountRepository.save(userAccountNO.get());
+
+                return balance;
+
+            }
+            throw new BankingException("Invalid Account Number.", BankingException.ExceptionTypes.INVALID_ACCOUNT_NUMBER);
+        }
+        throw new BankingException("Invalid User id.", BankingException.ExceptionTypes.INVALID_USER_ID);
+
+
+
+    }
+
+    @Override
+    public String updateBalance(String token, String accountNumber, BalanceDTO balanceDTO) {
+        String userId=authenticationService.getUserId(token);
+        Optional<UserAccount> userAccountUserId=userAccountRepository.findByUserId(userId);
+        if(userAccountUserId.isPresent()){
+            Optional<UserAccount> userAccountNO=userAccountRepository.findByAccountNumber(accountNumber);
+            if(userAccountNO.isPresent()){
+
+               Balance balance=balanceRepository.findByAccountNo(accountNumber)
+                        .orElseThrow(() -> new BankingException("", BankingException.ExceptionTypes.INVALID_ACCOUNT_NUMBER));
                balance.setAmount(balanceDTO.getAmount());
-               balance.setCurrency(balance.getCurrency());
-              return   balanceRepository.save(balance);
+               Balance addBalance=balanceRepository.save(balance);
+               userAccountNO.get().setBalance(addBalance);
+               userAccountRepository.save(userAccountNO.get());
+               return String.valueOf(balance.getAmount());
 
             }
             throw new BankingException("Invalid Account Number.", BankingException.ExceptionTypes.INVALID_ACCOUNT_NUMBER);
@@ -49,7 +80,11 @@ public class BankingServiceImpl implements BankingService {
 
     @Override
     public Balance getUserbalance(String token, String accountNumber) {
-        return null;
+        Balance balance=balanceRepository.findByAccountNo(accountNumber)
+                        .orElseThrow(() -> new BankingException("", BankingException.ExceptionTypes.INVALID_ACCOUNT_NUMBER));
+
+
+        return balance;
     }
 
     @Override

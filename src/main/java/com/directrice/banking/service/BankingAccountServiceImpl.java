@@ -8,6 +8,7 @@ import com.directrice.banking.enumeration.AccountStatus;
 import com.directrice.banking.enumeration.AccountType;
 import com.directrice.banking.enumeration.KYCStatus;
 import com.directrice.banking.exception.BankingException;
+import com.directrice.banking.respository.BalanceRepository;
 import com.directrice.banking.respository.UserAccountRepository;
 import com.directrice.banking.supportService.AuthenticationService;
 import com.directrice.banking.utility.AccountNumberGeneration;
@@ -20,14 +21,19 @@ import java.util.Optional;
 @Service
 public class BankingAccountServiceImpl implements BankingAccountService {
 
-   @Autowired
-   private UserAccountRepository userAccountRepository;
+    @Autowired
+    private UserAccountRepository userAccountRepository;
 
-   @Autowired
+    @Autowired
     private AccountNumberGeneration accountNumberGeneration;
 
-   @Autowired
-   private AuthenticationService authenticationService;
+    @Autowired
+    private BalanceRepository balanceRepository;
+
+    @Autowired
+    private AuthenticationService authenticationService;
+
+
 
     private void mapping(UserAccountDTO userAccountDTO,UserAccount userAccount) {
         userAccount.setFirstName(userAccountDTO.getFirstName());

@@ -1,14 +1,18 @@
 package com.directrice.banking.service;
 
+import com.directrice.banking.dto.AddressDTO;
 import com.directrice.banking.dto.OrganisationDTO;
 import com.directrice.banking.dto.UserAccountDTO;
+import com.directrice.banking.entity.Address;
 import com.directrice.banking.entity.OrganisationAccount;
 import com.directrice.banking.entity.UserAccount;
 import com.directrice.banking.enumeration.AccountStatus;
 import com.directrice.banking.enumeration.AccountType;
 import com.directrice.banking.enumeration.KYCStatus;
 import com.directrice.banking.exception.BankingException;
+import com.directrice.banking.respository.AddressRepository;
 import com.directrice.banking.respository.BalanceRepository;
+import com.directrice.banking.respository.OrganisationAccountRepository;
 import com.directrice.banking.respository.UserAccountRepository;
 import com.directrice.banking.supportService.AuthenticationService;
 import com.directrice.banking.utility.AccountNumberGeneration;
@@ -31,7 +35,13 @@ public class BankingAccountServiceImpl implements BankingAccountService {
     private BalanceRepository balanceRepository;
 
     @Autowired
+    private OrganisationAccountRepository organisationAccountRepository;
+
+    @Autowired
     private AuthenticationService authenticationService;
+
+    @Autowired
+    private AddressRepository addressRepository;
 
 
 
@@ -46,18 +56,27 @@ public class BankingAccountServiceImpl implements BankingAccountService {
         userAccount.setKycStatus(KYCStatus.PROCESSING_STATE.name());
     }
 
+    private void orgMapping(OrganisationDTO organisationDTO,OrganisationAccount organisationAccount){
+        organisationAccount.setName(organisationDTO.getName());
+        organisationAccount.setRegistrationDate(organisationDTO.getRegistrationDate());
+        organisationAccount.setWebsite(organisationDTO.getWebsite());
+        organisationAccount.setType(organisationDTO.getBusinessType());
+        organisationAccount.setLicenseNumber(organisationDTO.getLicenseNumber());
+        organisationAccount.setAddress(organisationDTO.getAddress());
+
+    }
+
+
     @Override
     public UserAccount addUserAccount(String token,UserAccountDTO userAccountDTO) {
        String userId=authenticationService.getUserId(token);
-       Optional<UserAccount> userAccountOptional=userAccountRepository.findByUserId(userId);
-       if(!userAccountOptional.isPresent()) {
-           UserAccount userAccount = new UserAccount();
-           userAccount.setUserId(userId);
-           mapping(userAccountDTO, userAccount);
-           userAccount.setAccountNumber(accountNumberGeneration.accountNumbers(userAccountDTO));
-           return userAccountRepository.save(userAccount);
-       }
-       throw new BankingException("User Already Have an Account.", BankingException.ExceptionTypes.ALREADY_ACCOUNT_CREATED);
+      Optional<UserAccount> userAccount=userAccountRepository.findByUserId(userId);
+               if(userAccount.isPresent()) throw new BankingException("User Already Have an Account.", BankingException.ExceptionTypes.ALREADY_ACCOUNT_CREATED);
+               UserAccount newUserAccount = new UserAccount();
+        newUserAccount.setUserId(userId);
+           mapping(userAccountDTO, newUserAccount);
+        newUserAccount.setAccountNumber(accountNumberGeneration.userAccountNumbers(userAccountDTO));
+           return userAccountRepository.save(newUserAccount);
     }
 
     @Override
@@ -116,8 +135,12 @@ public class BankingAccountServiceImpl implements BankingAccountService {
     }
 
     @Override
-    public OrganisationAccount addOrganisationAccount(OrganisationDTO organisationDTO) {
-        return null;
+    public OrganisationAccount addOrganisationAccount(String token,OrganisationDTO organisationDTO) {
+        String userId=authenticationService.getUserId(token);
+        OrganisationAccount organisationAccount=new OrganisationAccount();
+        orgMapping(organisationDTO,organisationAccount);
+        organisationAccount.setAccountNo(accountNumberGeneration.orgAccountNumbers(organisationDTO));
+        return organisationAccountRepository.save(organisationAccount);
     }
 
     @Override
@@ -137,6 +160,6 @@ public class BankingAccountServiceImpl implements BankingAccountService {
 
     @Override
     public List<OrganisationAccount> getAllOrganisation() {
-        return null;
+        return organisationAccountRepository.findAll();
     }
 }

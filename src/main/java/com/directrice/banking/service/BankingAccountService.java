@@ -17,10 +17,10 @@ public interface BankingAccountService {
 
     ////////////////////////////////////////
 
-    OrganisationAccount addOrganisationAccount(OrganisationDTO organisationDTO);
-    OrganisationAccount editOrganisationAccount(String token,String organisationAccountId,OrganisationDTO organisationDTO);
-    OrganisationAccount getOrganisationAccount(String token,String accountNo);
-    Boolean deleteOrganisationAccount(String token,String accountNo);
+    OrganisationAccount addOrganisationAccount(String token,OrganisationDTO organisationDTO);
+    OrganisationAccount editOrganisationAccount(String token,String organisationAccountNo,OrganisationDTO organisationDTO);
+    OrganisationAccount getOrganisationAccount(String token,String organisationAccountNo);
+    Boolean deleteOrganisationAccount(String token,String organisationAccountNo);
     List<OrganisationAccount> getAllOrganisation();
 
 }

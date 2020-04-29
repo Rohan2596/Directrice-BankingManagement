@@ -1,10 +1,7 @@
 package com.directrice.banking.service;
 
 import com.directrice.banking.dto.UserAccountDTO;
-import com.directrice.banking.entity.Address;
-import com.directrice.banking.entity.KycDetails;
-import com.directrice.banking.entity.UserAccount;
-import com.directrice.banking.entity.UserCardDetails;
+import com.directrice.banking.entity.*;
 import com.directrice.banking.enumeration.AccountStatus;
 import com.directrice.banking.exception.BankingException;
 import com.directrice.banking.respository.UserAccountRepository;
@@ -53,6 +50,7 @@ public class BankingAccountServiceTest {
     private String token;
     private UserCardDetails userCardDetails;
     private String accountNo;
+    private Balance balance;
 
     @BeforeEach
     void setUp() {
@@ -76,8 +74,11 @@ public class BankingAccountServiceTest {
                 AccountStatus.ACTIVE_ACCOUNT.name(),
                 "SAVING",
                 this.address,
+                "PROCESSING_STATE",
                 this.kycDetails,
-                this.userCardDetails);
+                this.userCardDetails,
+                new Balance()
+                );
         this.accountNo="D2020K111081";
     }
 

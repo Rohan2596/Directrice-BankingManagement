@@ -4,16 +4,10 @@ import com.directrice.banking.dto.AddressDTO;
 import com.directrice.banking.enumeration.AccountType;
 import com.directrice.banking.enumeration.UserType;
 import lombok.Data;
-import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.FieldType;
-import org.springframework.data.mongodb.core.mapping.MongoId;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Data
@@ -23,6 +17,7 @@ public class OrganisationAccount {
 
     @Id
     private String id;
+//    private String userId;
     private String name;
     private String licenseNumber;
     private String website;
@@ -31,7 +26,7 @@ public class OrganisationAccount {
     private String  registrationDate;
     private String accountNo;
     private String userType=UserType.LEGAL.name();
-    private String accountType= AccountType.CURRENT_ACCOUNT.name();
+    private String accountType= AccountType.CHECKING_ACCOUNT.name();
 
     @DBRef
     private Address legalUserAddress;

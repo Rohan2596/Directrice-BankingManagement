@@ -1,10 +1,7 @@
 package com.directrice.banking.service;
 
 import com.directrice.banking.dto.AddressDTO;
-import com.directrice.banking.entity.Address;
-import com.directrice.banking.entity.KycDetails;
-import com.directrice.banking.entity.UserAccount;
-import com.directrice.banking.entity.UserCardDetails;
+import com.directrice.banking.entity.*;
 import com.directrice.banking.enumeration.AccountStatus;
 import com.directrice.banking.exception.BankingException;
 import com.directrice.banking.respository.AddressRepository;
@@ -40,6 +37,7 @@ public class BankingAddressServiceTest {
     private String userId;
     private String accountNo;
     private UserAccount userAccount;
+    private Balance balance;
 
 
     @Mock
@@ -61,6 +59,7 @@ public class BankingAddressServiceTest {
         this.address=new Address("5ea2a018c030cd45536522d4","c47dbe5c-5a5b-4195-87e7-ff69cd1e43f2","D2020K251049","Marine Drive","Mumbai","Mumbai","Maharashtra","India","420001");
         this.userId="c47dbe5c-5a5b-4195-87e7-ff69cd1e43f2";
         this.accountNo="D2020K251049";
+        this.balance=new Balance();
         this.userAccount=new UserAccount("5ea01f859ca6df095feef2bd",
                 "c47dbe5c-5a5b-4195-87e7-ff69cd1e43f2",
                 "ROHAN",
@@ -75,8 +74,10 @@ public class BankingAddressServiceTest {
                 AccountStatus.ACTIVE_ACCOUNT.name(),
                 "SAVING",
                 this.address,
+                "PROCESSING_STATE",
                 this.kycDetails,
-                this.userCardDetails);
+                this.userCardDetails,
+                this.balance);
     }
 
 //add Address

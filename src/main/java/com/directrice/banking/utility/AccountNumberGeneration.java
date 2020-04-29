@@ -1,5 +1,6 @@
 package com.directrice.banking.utility;
 
+import com.directrice.banking.dto.OrganisationDTO;
 import com.directrice.banking.dto.UserAccountDTO;
 import org.springframework.stereotype.Component;
 
@@ -11,7 +12,7 @@ import java.util.UUID;
 public class AccountNumberGeneration {
 
 //11 digits number
-    public String accountNumbers(UserAccountDTO userAccountDTO){
+    public String userAccountNumbers(UserAccountDTO userAccountDTO){
         // create a LocalDateTime Object
         LocalDateTime local = LocalDateTime.parse(LocalDateTime.now().toString());
 
@@ -29,4 +30,21 @@ public class AccountNumberGeneration {
         int number=random.nextInt(outbound-inbound)+10;
         return  String.valueOf(number);
     }
+    //14 digits number
+    public String orgAccountNumbers(OrganisationDTO organisationDTO){
+        // create a LocalDateTime Object
+        LocalDateTime local = LocalDateTime.parse(LocalDateTime.now().toString());
+
+        // get Year
+        int year = local.getYear();
+        String companyName="D" + year;
+        String name= organisationDTO.getName().toUpperCase().charAt(0) + organisationDTO.getRegistrationDate().substring(0,4);
+        String fourDigits=randomMix(9999,1000);
+//        System.out.println(companyName+" company "+name + "name" + fourDigits +"digits");
+        return companyName+name+fourDigits;
+    }
+
+
+    
+    
 }

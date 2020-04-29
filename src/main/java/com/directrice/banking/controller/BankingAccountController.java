@@ -85,7 +85,7 @@ public class BankingAccountController {
             return new ResponseEntity<Response>(new Response("Error Message.",bindingResult.getAllErrors().get(0).getDefaultMessage(),LocalDateTime.now().toString()),
                     HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(new Response(), HttpStatus.CREATED);
+        return new ResponseEntity<>(new Response("Organisation Account",bankingAccountService.addOrganisationAccount(token,organisationDTO),LocalDateTime.now().toString()), HttpStatus.CREATED);
     }
 
     @PutMapping("/organisation/account")

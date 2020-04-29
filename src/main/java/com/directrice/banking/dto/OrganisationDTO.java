@@ -27,7 +27,7 @@ public class OrganisationDTO {
 
     @NotNull(message = "Organisation type cannot be empty." )
     @Length(min = 2 ,message = "Organisation type length should be greater than 2.")
-    private String type;
+    private String businessType;
 
     @Valid
     private AddressDTO address;

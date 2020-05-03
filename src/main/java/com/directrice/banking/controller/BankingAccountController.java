@@ -97,18 +97,18 @@ public class BankingAccountController {
             return new ResponseEntity<Response>(new Response("Error Message.",bindingResult.getAllErrors().get(0).getDefaultMessage(),LocalDateTime.now().toString()),
                     HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(new Response(), HttpStatus.OK);
+        return new ResponseEntity<>(new Response("Edits Organisation",bankingAccountService.editOrganisationAccount(token,accountNumber,organisationDTO),LocalDateTime.now().toString()), HttpStatus.OK);
     }
 
     @GetMapping("/organisation/{accountNumber}")
     public ResponseEntity<Response> getOrganisationAccount(@RequestHeader String token,
                                                          @PathVariable String accountNumber){
-        return new ResponseEntity<>(new Response(),HttpStatus.OK);
+        return new ResponseEntity<>(new Response("Organisation Account",bankingAccountService.getOrganisationAccount(token, accountNumber),LocalDateTime.now().toString()),HttpStatus.OK);
     }
 
     @GetMapping("/organisation/accounts")
     public ResponseEntity<Response> getAllOrganisationAccount(){
-        return new ResponseEntity<>(new Response(),HttpStatus.OK);
+        return new ResponseEntity<>(new Response("All Orgainsation Account",bankingAccountService.getAllOrganisation(),LocalDateTime.now().toString()),HttpStatus.OK);
     }
 
 

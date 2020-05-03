@@ -139,23 +139,55 @@ public class BankingAccountServiceImpl implements BankingAccountService {
         String userId=authenticationService.getUserId(token);
         OrganisationAccount organisationAccount=new OrganisationAccount();
         orgMapping(organisationDTO,organisationAccount);
+        organisationAccount.setUserId(userId);
         organisationAccount.setAccountNo(accountNumberGeneration.orgAccountNumbers(organisationDTO));
         return organisationAccountRepository.save(organisationAccount);
     }
 
     @Override
     public OrganisationAccount editOrganisationAccount(String token, String organisationAccountId, OrganisationDTO organisationDTO) {
-        return null;
+        String userId=authenticationService.getUserId(token);
+        Optional<OrganisationAccount> organisationAccountUserId=organisationAccountRepository.findByUserId(userId);
+        if(organisationAccountUserId.isPresent()){
+            Optional<OrganisationAccount> organisationAccountAccountNu=organisationAccountRepository.findByUserId(userId);
+            if(organisationAccountAccountNu.isPresent()){
+                orgMapping(organisationDTO,organisationAccountAccountNu.get());
+                return organisationAccountRepository.save(organisationAccountAccountNu.get());
+            }
+            throw  new BankingException("InValid Account Number.",BankingException.ExceptionTypes.INVALID_ACCOUNT_NUMBER);
+        }
+        throw  new BankingException("Invalid UserId",BankingException.ExceptionTypes.INVALID_USER_ID);
     }
 
     @Override
     public OrganisationAccount getOrganisationAccount(String token, String accountNo) {
-        return null;
+        String userId=authenticationService.getUserId(token);
+         Optional<OrganisationAccount> organisationAccountUserId=organisationAccountRepository.findByUserId(userId);
+              if(organisationAccountUserId.isPresent()){
+                  Optional<OrganisationAccount> organisationAccountAccountNu=organisationAccountRepository.findByUserId(userId);
+                  if(organisationAccountAccountNu.isPresent()){
+                        return organisationAccountAccountNu.get();
+                     }
+                  throw  new BankingException("InValid Account Number.",BankingException.ExceptionTypes.INVALID_ACCOUNT_NUMBER);
+              }
+        throw  new BankingException("Invalid UserId",BankingException.ExceptionTypes.INVALID_USER_ID);
     }
 
     @Override
-    public Boolean deleteOrganisationAccount(String token, String accountNo) {
-        return null;
+    public Boolean deleteOrganisationAccount(String token, String accountNo)
+    {
+        String userId=authenticationService.getUserId(token);
+        Optional<OrganisationAccount> organisationAccountUserId=organisationAccountRepository.findByUserId(userId);
+        if(organisationAccountUserId.isPresent()){
+            Optional<OrganisationAccount> organisationAccountAccountNu=organisationAccountRepository.findByUserId(userId);
+            if(organisationAccountAccountNu.isPresent()){
+                organisationAccountRepository.delete(organisationAccountAccountNu.get());
+                return true;
+            }
+            throw  new BankingException("InValid Account Number.",BankingException.ExceptionTypes.INVALID_ACCOUNT_NUMBER);
+        }
+        throw  new BankingException("Invalid UserId",BankingException.ExceptionTypes.INVALID_USER_ID);
+
     }
 
     @Override

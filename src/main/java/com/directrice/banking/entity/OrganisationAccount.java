@@ -17,7 +17,7 @@ public class OrganisationAccount {
 
     @Id
     private String id;
-//    private String userId;
+    private String userId;
     private String name;
     private String licenseNumber;
     private String website;

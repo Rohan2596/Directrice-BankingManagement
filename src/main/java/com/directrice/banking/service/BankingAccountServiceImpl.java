@@ -145,11 +145,11 @@ public class BankingAccountServiceImpl implements BankingAccountService {
     }
 
     @Override
-    public OrganisationAccount editOrganisationAccount(String token, String organisationAccountId, OrganisationDTO organisationDTO) {
+    public OrganisationAccount editOrganisationAccount(String token, String organisationAccountNumber, OrganisationDTO organisationDTO) {
         String userId=authenticationService.getUserId(token);
         Optional<OrganisationAccount> organisationAccountUserId=organisationAccountRepository.findByUserId(userId);
         if(organisationAccountUserId.isPresent()){
-            Optional<OrganisationAccount> organisationAccountAccountNu=organisationAccountRepository.findByUserId(userId);
+            Optional<OrganisationAccount> organisationAccountAccountNu=organisationAccountRepository.findByAccountNo(organisationAccountNumber);
             if(organisationAccountAccountNu.isPresent()){
                 orgMapping(organisationDTO,organisationAccountAccountNu.get());
                 return organisationAccountRepository.save(organisationAccountAccountNu.get());
@@ -164,7 +164,7 @@ public class BankingAccountServiceImpl implements BankingAccountService {
         String userId=authenticationService.getUserId(token);
          Optional<OrganisationAccount> organisationAccountUserId=organisationAccountRepository.findByUserId(userId);
               if(organisationAccountUserId.isPresent()){
-                  Optional<OrganisationAccount> organisationAccountAccountNu=organisationAccountRepository.findByUserId(userId);
+                  Optional<OrganisationAccount> organisationAccountAccountNu=organisationAccountRepository.findByAccountNo(accountNo);
                   if(organisationAccountAccountNu.isPresent()){
                         return organisationAccountAccountNu.get();
                      }

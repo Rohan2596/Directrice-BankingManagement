@@ -1,9 +1,12 @@
 package com.directrice.banking.service;
 
+import com.directrice.banking.dto.AddressDTO;
+import com.directrice.banking.dto.OrganisationDTO;
 import com.directrice.banking.dto.UserAccountDTO;
 import com.directrice.banking.entity.*;
 import com.directrice.banking.enumeration.AccountStatus;
 import com.directrice.banking.exception.BankingException;
+import com.directrice.banking.respository.OrganisationAccountRepository;
 import com.directrice.banking.respository.UserAccountRepository;
 import com.directrice.banking.supportService.AuthenticationService;
 import com.directrice.banking.utility.AccountNumberGeneration;
@@ -40,12 +43,18 @@ public class BankingAccountServiceTest {
     @Mock
     private AccountNumberGeneration accountNumberGeneration;
 
+    @Mock
+    private OrganisationAccountRepository organisationAccountRepository;
+
     @InjectMocks
     private BankingAccountServiceImpl bankingAccountService;
 
     private UserAccount userAccount;
     private UserAccountDTO userAccountDTO;
+    private OrganisationAccount organisationAccount;
+    private OrganisationDTO organisationDTO;
     private Address address;
+    private AddressDTO addressDTO;
     private KycDetails kycDetails;
     private String token;
     private UserCardDetails userCardDetails;
@@ -80,6 +89,26 @@ public class BankingAccountServiceTest {
                 new Balance()
                 );
         this.accountNo="D2020K111081";
+        this.organisationDTO=new OrganisationDTO("kadam Groups Pvt Ltd",
+                "ABCD1234",
+                "www.kadam.com",
+                "All types",
+                this.addressDTO,
+                "78/78/78");
+        this.organisationAccount=new OrganisationAccount(
+                "5ea01f859ca6df095feef2bd",
+                "c47dbe5c-5a5b-4195-87e7-ff69cd1e43f2",
+                "kadam Groups PVT",
+                "QWER1233",
+                "www.kadam.com",
+                "CHECKING_ACCOUNT",
+                this.addressDTO,
+                "78/78/78",
+                "D2020K111081123",
+                "Legal",
+                "Checking_Account",
+                this.address,
+                this.kycDetails);
     }
 
     //NATURAL USERS
@@ -231,9 +260,89 @@ public class BankingAccountServiceTest {
 
     //organisation Account
     //add user Account
+    @Test
+    void givenValidToken_ValidOrganisationDTO_WhenAdded_shouldReturnListResponse(){
+        Mockito.when(authenticationService.getUserId(this.token)).thenReturn("dsfsdfdsfs");
+        Mockito.when(organisationAccountRepository.save(any())).thenReturn(this.organisationAccount);
+        OrganisationAccount organisationAccount=bankingAccountService.addOrganisationAccount(this.token,this.organisationDTO);
+        Assertions.assertEquals("kadam Groups PVT",organisationAccount.getName());
+    }
+
     //edit user account
+    @Test
+    void givenValidToken_ValidOrganisationDTO_WhenEdited_shouldReturnListResponse(){
+        Mockito.when(authenticationService.getUserId(this.token)).thenReturn("dsfsdfdsfs");
+        Mockito.when(organisationAccountRepository.save(any())).thenReturn(this.organisationAccount);
+        Mockito.when(organisationAccountRepository.findByUserId(any())).thenReturn(Optional.of(this.organisationAccount));
+        Mockito.when(organisationAccountRepository.findByAccountNo(any())).thenReturn(Optional.of(this.organisationAccount));
+        OrganisationAccount organisationAccount=bankingAccountService.editOrganisationAccount(this.token,this.accountNo,this.organisationDTO);
+        Assertions.assertEquals("kadam Groups Pvt Ltd",organisationAccount.getName());
+    }
+    @Test
+    void givenInValidToken_ValidOrganisationDTO_WhenEdited_shouldReturnListResponse(){
+       try{
+        Mockito.when(authenticationService.getUserId(this.token)).thenReturn("dsfsdfdsfs");
+        Mockito.when(organisationAccountRepository.save(any())).thenReturn(this.organisationAccount);
+        Mockito.when(organisationAccountRepository.findByAccountNo(any())).thenReturn(Optional.of(this.organisationAccount));
+        bankingAccountService.editOrganisationAccount(this.token,this.accountNo,this.organisationDTO);
+           }catch (BankingException bankingException){
+
+           Assertions.assertEquals("Invalid User Id.",bankingException.exceptionTypes.errorMessage);
+       }
+    }
+
+    @Test
+    void givenValidTokenInvalidUserID_ValidOrganisationDTO_WhenEdited_shouldReturnListResponse(){
+        try{
+            Mockito.when(authenticationService.getUserId(this.token)).thenReturn("dsfsdfdsfs");
+            Mockito.when(organisationAccountRepository.save(any())).thenReturn(this.organisationAccount);
+        Mockito.when(organisationAccountRepository.findByUserId(any())).thenReturn(Optional.of(this.organisationAccount));
+            bankingAccountService.editOrganisationAccount(this.token,this.accountNo,this.organisationDTO);
+        }catch (BankingException bankingException){
+
+            Assertions.assertEquals("Invalid Account Number.",bankingException.exceptionTypes.errorMessage);
+        }
+    }
+
     //get Organisation
+    @Test
+    void givenValidTokenAndAccountNumber_Organisation_Account_shouldReturnListResponse(){
+        Mockito.when(authenticationService.getUserId(this.token)).thenReturn("dsfsdfdsfs");
+        Mockito.when(organisationAccountRepository.findByUserId(any())).thenReturn(Optional.of(this.organisationAccount));
+        Mockito.when(organisationAccountRepository.findByAccountNo(any())).thenReturn(Optional.of(this.organisationAccount));
+        OrganisationAccount organisationAccount=bankingAccountService.getOrganisationAccount(this.token,this.accountNo);
+        Assertions.assertEquals("kadam Groups PVT",organisationAccount.getName());
+    }
+    @Test
+    void givenInValidTokenAndAccountNumber_Organisation_Account_shouldReturnListResponse(){
+       try{
+        Mockito.when(authenticationService.getUserId(this.token)).thenReturn("dsfsdfdsfs");
+        Mockito.when(organisationAccountRepository.findByAccountNo(any())).thenReturn(Optional.of(this.organisationAccount));
+        bankingAccountService.getOrganisationAccount(this.token,this.accountNo);
+
+    }catch (BankingException bankingException){
+           Assertions.assertEquals("Invalid User Id.",bankingException.exceptionTypes.errorMessage);
+       }
+    }
+    @Test
+    void givenValidTokenAndInValidAccountNumber_Organisation_Account_shouldReturnListResponse(){
+        try{
+            Mockito.when(authenticationService.getUserId(this.token)).thenReturn("dsfsdfdsfs");
+        Mockito.when(organisationAccountRepository.findByUserId(any())).thenReturn(Optional.of(this.organisationAccount));
+            bankingAccountService.getOrganisationAccount(this.token,this.accountNo);
+
+        }catch (BankingException bankingException){
+            Assertions.assertEquals("Invalid Account Number.",bankingException.exceptionTypes.errorMessage);
+        }
+    }
+
+
     //get All Organisation Account
+    @Test
+    void givenValidToken_UserId_ALL_ORganisation_Account_shouldReturnListResponse(){
+        List<OrganisationAccount> organisationAccountList=bankingAccountService.getAllOrganisation();
+        Assertions.assertEquals(0,organisationAccountList.size());
+    }
     //Add  legal user address to Organisation account
     //add KYC to Organisation Account of legal user and organisation
 

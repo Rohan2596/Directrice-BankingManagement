@@ -3,14 +3,17 @@ package com.directrice.banking.entity;
 import com.directrice.banking.dto.AddressDTO;
 import com.directrice.banking.enumeration.AccountType;
 import com.directrice.banking.enumeration.UserType;
-import lombok.Data;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
-@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @Document(collection = "organisation_account")
 public class OrganisationAccount {
 
@@ -36,6 +39,6 @@ public class OrganisationAccount {
     * 2)KYC deatils of legal user.
     * */
     @DBRef
-    private List<KycDetails> kycDetailsList;
+    private KycDetails kycDetailsList;
 
 }
